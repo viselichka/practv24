@@ -1,0 +1,68 @@
+1. Создадайте файл в домашнем каталоге
+cd ls ~/
+touch ${USER}_part3.log 
+
+2. Создайте иерархию вложенных каталогов D1/D2/D3
+mkdir -p D1/D2/D3
+
+3. В каталоге D2 создайте обычный пустой файл
+cd D1/D2
+touch file.txt
+
+4. Добавьте произвольный текст в созданный файл
+vim file.txt
+cat file.txt
+Welcome hhhh
+home aaaa
+aw gggg
+
+5. В каталоге D3 добавьте символическую и жесткие ссылки на файл
+cd ~
+ln -s D1/D2/file.txt D1/D2/D3/symfile.txt #символическая ссылка
+ln D1/D2/file.txt D1/D2/D3/hardfile.txt   #жесткая ссылка
+
+6. Докажите, что ссылки созданы успешно
+
+ls -l ~/D1/D2/D3
+total 4
+-rw-r--r-- 2 eltex-pg2-v24 eltex-pg2-v24 31 Mar 17 12:36 hardfile.txt
+lrwxrwxrwx 1 eltex-pg2-v24 eltex-pg2-v24 14 Mar 17 12:41 symfile.txt -> D1/D2/file.txt
+
+7. Переместите файл в каталог D1
+mv D1/D2/file.txt D1/
+
+8. Проверьте работу ранее созданных ссылок на файл
+cat D1/D2/D3/symfile.txt
+cat: D1/D2/D3/symfile.txt: No such file or directory
+cat D1/D2/D3/hardfile.txt
+Welcome hhhh
+home aaaa
+aw gggg
+#Рабочей оказалась жесткая ссылка. Жесткая ссылка и файл, для которого она создавалась, имеюет одинаковые индексы (inode) в файловой системе.
+
+9. Удалите каталог D2 со всем содержимым
+rm -r ~/D1/D2
+
+10. Найдите все файлы >50 mb. Записать список найденных файлов в файл.
+touch eltex-pg2-v24+part3_gt50M.log
+find / -type f -size +50M
+find / -type f -size +50M -exec ls -lh {} + >> eltex-pg2-v24_part3_gt50M.log 2>/dev/null
+-rw-r--r-- 1 eltex-pg2-v23 eltex-pg2-v23 118M Mar 10 23:28 /home/eltex-pg2-v23/eltex-pg2-v23_part.log
+-r-------- 1 root          root          128T Mar 12 22:13 /proc/kcore
+
+11-12. В домашнем каталоге и его подкаталогах найти файлы, измененные в течение 24-х часов. 
+find ~/ -type f -mtime -1
+
+13. В каком катологе находится команда find 
+which find
+
+14. Определите характре содержимого файла find командой file
+file /usr/bin/find
+/usr/bin/find: ELF 64-bit LSB pie executable, x86-64, version 1 (SYSV), dynamically linked, interpreter /lib64/ld-linux-x86-64.so.2, BuildID[sha1]=5545a6c7162d325fbe5ffabcbfe4e5521b66ce70, for GNU/Linux 3.2.0, stripped
+# Является исполнимым файлом ELF на базе врхитектуры x86-64
+
+15. Определите к какому типу относятся файлы /boot/initrd.img*
+file /boot/initrd.img*
+/boot/initrd.img-6.1.0-27-amd64: ASCII cpio archive (SVR4 with no CRC)
+/boot/initrd.img-6.1.0-31-amd64: ASCII cpio archive (SVR4 with no CRC)
+# относятся к архивам, сжатым в формате cpio, данные архива в кодировке ASCII

@@ -1,0 +1,90 @@
+1.Запуск новой сессии и создание лог файла
+2025-03-12 screen -S ${USER}_part2 -d -m 
+2025-03-12 screen -r 
+2025-03-12 touch ${USER}_part.log 
+
+2-3. Механизм дополнения имен команд для ls
+2025-03-12 ls //<tab><tab>
+ls           lsb_release  lsinitramfs  lslocks      lsmod        lspci
+lsattr       lscpu        lsipc        lslogins     lsns         lsusb
+lsblk        lsfd         lsirq        lsmem        lsof 
+
+4-5. Механизм дополнения имен переменных для HIST
+2025-03-12  compgen -v HIST
+HISTCMD
+HISTCONTROL
+HISTFILE
+HISTFILESIZE
+HISTSIZE
+HISTTIMEFORMAT
+либо 
+2025-03-12 $HIST //<tab><tab>
+$HISTCMD         $HISTFILE        $HISTSIZE        
+$HISTCONTROL     $HISTFILESIZE    $HISTTIMEFORMAT  
+
+6.Сколько команд хранится в файле истории
+2025-03-12 echo $HISTFILESIZE
+2000
+
+7.Команда для выведения файлов и каталогов из домашнего, нач. с "."
+2025-03-12 ls ~/.* -a -d
+/home/eltex-pg2-v24/.bash_history                 /home/eltex-pg2-v24/.eltex-pg2-v24_part.log.swo
+/home/eltex-pg2-v24/.bash_logout                  /home/eltex-pg2-v24/.eltex-pg2-v24_part.log.swp
+/home/eltex-pg2-v24/.bashrc                       /home/eltex-pg2-v24/.lesshst
+/home/eltex-pg2-v24/.config                       /home/eltex-pg2-v24/.profile
+/home/eltex-pg2-v24/.eltex-pg2-v24_part3.log.swp  /home/eltex-pg2-v24/.ssh
+/home/eltex-pg2-v24/.eltex-pg2-v24_part.log.swn   /home/eltex-pg2-v24/.viminfo
+
+8.Настройка вывода даты выполнения команд в истории
+2025-03-12 vim ~/.bashrc
+export HISTTIMEFORMAT="%Y-%m-%d " #прописываем строчку в конце файла
+2025-03-12 source ~/.bashrc
+
+9. Настройка автоматического сохранения команд в файле истории:
+2025-03-12 date 
+2025-03-12 history | tail -n 10
+2025-03-12 cat ~/.bash_history | tail -n 10
+2025-03-12 vim ~/.bashrc
+export PROMPT_COMMAND='history -a' #прописываем строку в конце файла
+2025-03-12 source ~/.bashrc
+2025-03-12 date 
+2025-03-12 history | tail -n 10
+2025-03-12 cat ~/.bash_history | tail -n 10
+
+10. Создайте переменную DATE
+2025-03-12 DATE=`date +%D`
+2025-03-12 echo $DATE
+03/12/25
+
+11. Создайте переменную TIME
+2025-03-12 TIME=`date +%T`
+2025-03-12 echo $TIME
+01:18:12
+
+12. Создайте переменную DATE_TIME
+2025-03-12 DATE_TIME=$DATE\ $TIME
+2025-03-12 echo $DATE_TIME
+03/12/25 01:22:01
+
+13.Файлы содержащие цифру в каталогах /bin /sbin
+2025-03-12 find /bin/ /sbin/ -type f -regex '.*[0-9].*' | tr '\n' ' '
+/bin/pod2html /bin/python3.11 /bin/ssh-argv0 /bin/c99-gcc /bin/x86_64-linux-gnu-gcc-ar-12 /bin/base64 /bin/x86_64-linux-gnu-gcc-ranlib-12 /bin/enc2xs /bin/x86_64-linux-gnu-gcov-12 /bin/pod2usage /bin/x86_64-linux-gnu-objdump /bin/sha224sum /bin/x86_64-linux-gnu-objcopy /bin/bzip2 /bin/x86_64-linux-gnu-readelf /bin/x86_64-linux-gnu-ar /bin/grub-mkpasswd-pbkdf2 /bin/md5sum /bin/bzip2recover /bin/grub-menulst2cfg /bin/x86_64-linux-gnu-cpp-12 /bin/x86_64-linux-gnu-size /bin/x86_64-linux-gnu-gprofng /bin/x86_64-linux-gnu-gprof /bin/h2xs /bin/x86_64-linux-gnu-ranlib /bin/x86_64-linux-gnu-ld.gold /bin/x86_64-linux-gnu-as /bin/pod2text /bin/x86_64-linux-gnu-nm /bin/x86_64-linux-gnu-elfedit /bin/x86_64-linux-gnu-strip /bin/x86_64-linux-gnu-gcc-nm-12 /bin/perl5.36.0 /bin/x86_64-linux-gnu-ld.bfd /bin/pydoc3.11 /bin/x86_64-linux-gnu-gcov-tool-12 /bin/b2sum /bin/x86_64-linux-gnu-lto-dump-12 /bin/pod2man /bin/sha1sum /bin/c89-gcc /bin/pl2pm /bin/h2ph /bin/x86_64-linux-gnu-c++filt /bin/sha512sum /bin/x86_64-linux-gnu-gcc-12 /bin/x86_64-linux-gnu-gp-display-src /bin/base32 /bin/x86_64-linux-gnu-gp-collect-app /bin/cpan5.36-x86_64-linux-gnu /bin/x86_64-linux-gnu-gp-archive /bin/sha384sum /bin/py3clean /bin/x86_64-linux-gnu-gcov-dump-12 /bin/perl5.36-x86_64-linux-gnu /bin/x86_64-linux-gnu-strings /bin/x86_64-linux-gnu-gp-display-html /bin/pygettext3.11 /bin/systemd-id128 /bin/x86_64-linux-gnu-dwp /bin/bunzip2 /bin/x86_64-linux-gnu-gp-display-text /bin/x86_64-linux-gnu-addr2line /bin/py3compile /bin/grub-syslinux2cfg /bin/diff3 /bin/sha256sum /sbin/dumpe2fs /sbin/e2fsck /sbin/e2freefrag /sbin/e2undo /sbin/e2scrub_all /sbin/tune2fs /sbin/e2image /sbin/e4defrag /sbin/mke2fs /sbin/e4crypt /sbin/killall5 /sbin/e2scrub /sbin/resize2fs
+
+14.Изменение приглашения
+2025-03-12 export PS1="\u@\h-$(date "+%H:%M")>"
+
+15. Установка приглашения для запускаемого bash
+2025-03-12 vim ~/.bashrc
+PS1='\u@\h-$(date "+%H:%M")>' #прописываем строчку в конец файла
+2025-03-12 source ~/.bashrc
+
+16. Подкаталоги в домашнем для каждого месяца текущего года
+2025-03-12 mkdir -p ~/$(date +"%Y")-{01..12}
+2025-03-12 ls ~/2025* -a -d
+/home/eltex-pg2-v24/2025-01  /home/eltex-pg2-v24/2025-05  /home/eltex-pg2-v24/2025-09
+/home/eltex-pg2-v24/2025-02  /home/eltex-pg2-v24/2025-06  /home/eltex-pg2-v24/2025-10
+/home/eltex-pg2-v24/2025-03  /home/eltex-pg2-v24/2025-07  /home/eltex-pg2-v24/2025-11
+/home/eltex-pg2-v24/2025-04  /home/eltex-pg2-v24/2025-08  /home/eltex-pg2-v24/2025-12
+
+
+
